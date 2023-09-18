@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:magic_counter/presentation/bloc/weather_counter_bloc/weather_counter_bloc.dart';
+import 'package:magic_counter/utils/app_router.dart';
 import 'utils/links.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setup();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   // This widget is the root of your application.
+  final _appRouter = AppRouter();
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -21,10 +24,10 @@ class MyApp extends StatelessWidget {
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {
-          return MaterialApp(
+          return MaterialApp.router(
             theme: state.themeData,
             debugShowCheckedModeBanner: false,
-            home: HomePage(),
+            routerConfig: _appRouter.config(),
           );
         },
       ),
